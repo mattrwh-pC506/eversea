@@ -1,0 +1,15 @@
+{
+  "name": "Eversea",
+  "description": "Used for pathfinder eversea campaign management.",
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-nodejs"
+    }
+  ],
+  "env": {
+    "ENV": {
+      "description": "Runtime environment",
+      "required": true
+    }
+  }
+}
