@@ -6,6 +6,7 @@ var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var NotesController = require('./NotesController.js');
 var NotesService = require('./NotesService.js');
+var _database = require('./database.js');
 
 var NOTES_COLLECTION = "notes";
 
@@ -32,7 +33,7 @@ mongodb.MongoClient.connect(buildMongodbUrl(), function (err, database) {
   }
 
   // Save database object from the callback for reuse.
-  db = database;
+  db = _database.addDatabase(database);
   console.log("Database connection ready");
 
   // Initialize the app.

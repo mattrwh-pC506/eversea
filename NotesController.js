@@ -9,7 +9,7 @@ function handleError(res, reason, message, code) {
   res.status(code || 500).json({"error": message, "reason": reason});
 }
 
-var Notes = NotesService;
+var Notes = new NotesService();
 
 class NotesController {
     constructor(router, db) {

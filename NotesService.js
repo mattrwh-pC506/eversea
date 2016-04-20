@@ -2,12 +2,22 @@
  
 var uuid = require('node-uuid');
 var mongodb = require("mongodb");
+var database = require("./database.js");
 var ObjectID = mongodb.ObjectID;
+var db;
+
+function addDb(func, arguments) {
+  return function decorator() {
+    func.db = database.getDatabase();
+    func.apply(this, arguments);
+  }
+}
 
 class NotesService {
     constructor() {}
  
-    getNotes(req, res, db) {
+    getNotes(req, res) {
+      db = database.getDatabase();
       db.collection("notes").find({}).toArray(function(err, docs) {
         if (err) {
           handleError(res, err.message, "Failed to get notes.");
@@ -17,7 +27,8 @@ class NotesService {
       });
     }
  
-    getSingleNote(req, res, db) {
+    getSingleNote(req, res) {
+      db = database.getDatabase();
       db.collection("notes").findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
         if (err) {
           handleError(res, err.message, "Failed to get note.");
@@ -29,7 +40,8 @@ class NotesService {
       });
     }
  
-    addNote(req, res, db) {
+    addNote(req, res) {
+      db = database.getDatabase();
       var newNote = req.body;
       newNote.createDate = new Date();
 
@@ -46,7 +58,8 @@ class NotesService {
       });
     }
  
-    updateNote(req, res, db) {
+    updateNote(req, res) {
+      db = database.getDatabase();
       var updateDoc = req.body;
       delete updateDoc._id;
 
@@ -59,7 +72,8 @@ class NotesService {
       });
     }
 
-    deleteNote(req, res, db) {
+    deleteNote(req, res) {
+      db = database.getDatabase();
       db.collection("notes").deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
         if (err) {
           handleError(res, err.message, "Failed to delete note.");
@@ -69,5 +83,6 @@ class NotesService {
       });
     }
 }
+
  
-module.exports = new NotesService();
+module.exports = NotesService;
