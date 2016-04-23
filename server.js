@@ -5,7 +5,6 @@ var path = require("path");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var NotesController = require('./NotesController.js');
-var NotesService = require('./NotesService.js');
 var _database = require('./database.js');
 
 var NOTES_COLLECTION = "notes";

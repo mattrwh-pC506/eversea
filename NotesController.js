@@ -1,6 +1,6 @@
 'use strict';
 
-var NotesService = require('./NotesService.js');
+var CollectionService = require('./CollectionService.js');
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 
@@ -9,9 +9,9 @@ function handleError(res, reason, message, code) {
   res.status(code || 500).json({"error": message, "reason": reason});
 }
 
-var Notes = new NotesService();
+var Notes = new CollectionService("notes");
 
-class NotesController {
+module.exports = class NotesController {
     constructor(router, db) {
         this.router = router;
         this.db = db;
@@ -27,24 +27,23 @@ class NotesController {
     }
  
     getNotes(req, res) {
-      Notes.getNotes(req, res, this.db);
+      Notes.getCollection(req, res, this.db);
     }
  
     getSingleNote(req, res) {
-      Notes.getSingleNote(req, res, this.db);
+      Notes.getDoc(req, res, this.db);
     }
  
     putNote(req, res) {
-      Notes.updateNote(req, res, this.db);
+      Notes.updateDoc(req, res, this.db);
     }
  
     postNote(req, res) {
-      Notes.addNote(req, res, this.db);
+      Notes.addDoc(req, res, this.db);
     }
 
     deleteNote(req, res) {
-      Notes.deleteNote(req, res, this.db);
+      Notes.deleteDoc(req, res, this.db);
     }
 }
  
-module.exports = NotesController;
