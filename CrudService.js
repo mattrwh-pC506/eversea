@@ -7,7 +7,7 @@ var ObjectID = mongodb.ObjectID;
 var db;
 
 
-module.exports = class CollectionService {
+module.exports = class CrudService {
     constructor(collection) {
       this.collection = collection;
     }

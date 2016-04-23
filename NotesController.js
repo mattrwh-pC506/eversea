@@ -1,6 +1,6 @@
 'use strict';
 
-var CollectionService = require('./CollectionService.js');
+var CrudService = require('./CollectionService.js');
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 
@@ -9,7 +9,7 @@ function handleError(res, reason, message, code) {
   res.status(code || 500).json({"error": message, "reason": reason});
 }
 
-var Notes = new CollectionService("notes");
+var Notes = new CrudService("notes");
 
 module.exports = class NotesController {
     constructor(router, db) {
